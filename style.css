@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #000;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f5f000;
+  overflow: hidden;
+}
+
+.portal {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, rgba(236, 0, 140, 0.16), transparent 28%),
+    #000;
+}
+
+.portal-stage {
+  width: min(92vw, 720px);
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-align: center;
+}
+
+.portrait {
+  width: min(58vw, 310px);
+  height: auto;
+  opacity: 0;
+  filter: brightness(0.72) drop-shadow(0 0 22px rgba(236, 0, 140, 0.34));
+  animation: emerge 2.4s ease forwards, breathe 8s ease-in-out 2.5s infinite;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(32px, 9vw, 86px);
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+  color: #f5f000;
+  opacity: 0;
+  animation: textIn 1.4s ease 1.6s forwards;
+}
+
+.enter {
+  appearance: none;
+  border: 1px solid #ec008c;
+  background: transparent;
+  color: #ec008c;
+  padding: 14px 28px;
+  font-size: clamp(18px, 4vw, 28px);
+  letter-spacing: 0.22em;
+  cursor: pointer;
+  opacity: 0;
+  animation: textIn 1.4s ease 2.15s forwards;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.enter:hover,
+.enter:focus {
+  background: #ec008c;
+  color: #000;
+  outline: none;
+}
+
+.status {
+  min-height: 24px;
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: rgba(245, 240, 0, 0.72);
+}
+
+.portal.opening .portrait {
+  animation: absorb 1.45s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.portal.opening h1,
+.portal.opening .enter {
+  animation: vanish 0.65s ease forwards;
+}
+
+.portal.opened {
+  background: #000;
+}
+
+.portal.opened .portrait,
+.portal.opened h1,
+.portal.opened .enter {
+  display: none;
+}
+
+.portal.opened .status {
+  font-size: clamp(18px, 5vw, 34px);
+  color: #f5f000;
+}
+
+@keyframes emerge {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    filter: brightness(0.22) drop-shadow(0 0 0 rgba(236, 0, 140, 0));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: brightness(0.72) drop-shadow(0 0 22px rgba(236, 0, 140, 0.34));
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.018); }
+}
+
+@keyframes textIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vanish {
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes absorb {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(0.72) drop-shadow(0 0 22px rgba(236, 0, 140, 0.34));
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.75);
+    filter: brightness(0.38) drop-shadow(0 0 38px rgba(236, 0, 140, 0.22));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.8);
+    filter: brightness(0);
+  }
+}
